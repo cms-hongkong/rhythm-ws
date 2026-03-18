@@ -27,31 +27,42 @@
             box-sizing: border-box;
         }
 
-        /* --- 全新正式標題排版 --- */
-        .school-title { 
-            text-align: center; 
-            color: #2c3e50; 
+        /* --- 嚴格對齊的 3 行標題排版 --- */
+        .header-section {
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #bdc3c7; /* 標題底下的分隔線 */
+        }
+
+        .header-line-1 { 
             font-size: 2.2rem; 
-            margin: 0 0 8px 0; 
+            font-weight: bold;
+            color: #2c3e50; 
+            margin-bottom: 8px; 
             letter-spacing: 2px;
         }
         
-        .academic-year { 
-            text-align: center; 
+        .header-line-2 { 
             font-size: 1.2rem; 
             color: #34495e; 
-            margin-bottom: 15px; 
+            margin-bottom: 8px; 
             letter-spacing: 1px;
         }
         
-        .main-topic { 
-            text-align: center; 
+        .header-line-3 { 
             font-size: 1.6rem; 
+            font-weight: bold;
             color: #2980b9; 
-            font-weight: bold; 
-            margin-bottom: 25px; 
-            padding-bottom: 20px;
-            border-bottom: 2px solid #bdc3c7; /* 標題底下的分隔線 */
+        }
+
+        /* 繳交日期提示 */
+        .deadline-text {
+            text-align: right;
+            color: #c0392b;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
         }
 
         /* 學生資料區 */
@@ -73,12 +84,13 @@
             border-bottom: 2px dashed #7f8c8d;
             margin-left: 8px;
             padding: 3px;
-            width: 100px;
+            width: 80px; /* 稍微縮小以容納更多欄位 */
             background-color: #fdfbf7;
             text-align: center;
             outline: none;
             color: #2c3e50;
         }
+        .info-group.name-group input { width: 100px; } /* 姓名欄位寬一點 */
 
         /* 任務區塊 */
         .task-section {
@@ -93,6 +105,15 @@
             font-size: 1.3rem; color: #d35400; margin: 0 0 10px 0;
             display: flex; align-items: center; gap: 8px;
         }
+        
+        /* 右側配分文字 */
+        .score-badge {
+            margin-left: auto; /* 將配分推到最右邊 */
+            font-size: 1.1rem;
+            color: #7f8c8d;
+            font-weight: bold;
+        }
+
         .task-desc { font-size: 1rem; margin: 0 0 15px 0; line-height: 1.4; }
         .hint-text { color: #27ae60; font-weight: bold; font-size: 0.95rem; }
 
@@ -143,6 +164,23 @@
         /* 任務三的空格稍大一點 */
         .comp-slot { width: 40px; height: 55px; }
 
+        /* 總分區塊 */
+        .total-score-section {
+            margin-top: 20px;
+            text-align: right;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+            border-top: 2px dashed #bdc3c7;
+            padding-top: 20px;
+        }
+        .score-line {
+            display: inline-block;
+            width: 80px;
+            border-bottom: 2px solid #2c3e50;
+            margin: 0 10px;
+        }
+
         /* 列印按鈕 */
         .print-btn {
             position: fixed; bottom: 30px; right: 30px;
@@ -160,6 +198,7 @@
             .worksheet-container { box-shadow: none; border: none; padding: 0; max-width: 100%; }
             .print-btn, .hint-text { display: none !important; }
             
+            /* 列印時將輸入框轉為漂亮的底線 */
             .info-group input { background-color: transparent; border-bottom: 1px solid black; color: black; }
             
             .interactive-slot {
@@ -179,24 +218,26 @@
 
     <div class="worksheet-container">
         
-        <h1 class="school-title">聖公會偉倫小學</h1>
-        <div class="academic-year">2025-2026年度 音樂科</div>
-        <div class="main-topic">二年級 音樂專題 - 節奏頻現句</div>
+        <div class="header-section">
+            <div class="header-line-1">聖公會偉倫小學</div>
+            <div class="header-line-2">2025-2026年度 音樂科</div>
+            <div class="header-line-3">二年級&nbsp; 音樂專題 - 節奏頻現句</div>
+        </div>
+
+        <div class="deadline-text">繳交日期：2025年5月30日(五)</div>
 
         <div class="student-info">
-            <div class="info-group">
-                班別：<input type="text" placeholder="例: 2A">
-            </div>
-            <div class="info-group">
-                學號：<input type="text" placeholder="例: 15">
-            </div>
-            <div class="info-group">
-                姓名：<input type="text" placeholder="請輸入姓名">
-            </div>
+            <div class="info-group">班別：<input type="text" placeholder="例: 2A"></div>
+            <div class="info-group">學號：<input type="text" placeholder="例: 15"></div>
+            <div class="info-group name-group">姓名：<input type="text" placeholder="請輸入"></div>
+            <div class="info-group">日期：<input type="text" placeholder="年/月/日"></div>
         </div>
 
         <div class="task-section">
-            <h2 class="task-title">🔍 任務一：X光掃描機（找不同）</h2>
+            <h2 class="task-title">
+                🔍 任務一：X光掃描機（找不同） 
+                <span class="score-badge">(20%)</span>
+            </h2>
             <p class="task-desc">
                 下面的節奏箱子中，有一個「搗蛋鬼」破壞了頻現句的重複規律。<br>
                 <span class="hint-text">👉 請「點擊」那個不一樣的箱子把它圈起來。</span>
@@ -210,7 +251,10 @@
         </div>
 
         <div class="task-section">
-            <h2 class="task-title">🌉 任務二：修復音符橋樑（填空）</h2>
+            <h2 class="task-title">
+                🌉 任務二：修復音符橋樑（填空）
+                <span class="score-badge">(30%)</span>
+            </h2>
             <p class="task-desc">
                 這座橋有著重複的音符圖案，但中間破了幾個洞。請觀察前後的規律修補它。<br>
                 <span class="hint-text">👉 請「點擊」藍色虛線空格，可以切換不同的音符。</span>
@@ -225,7 +269,10 @@
         </div>
 
         <div class="task-section">
-            <h2 class="task-title">✨ 任務三：頻現句創作工房</h2>
+            <h2 class="task-title">
+                ✨ 任務三：頻現句創作工房
+                <span class="score-badge">(50%)</span>
+            </h2>
             <p class="task-desc">
                 你是一位小小作曲家！請在下方的空格中，創作出一段屬於你的頻現句。<br>
                 <em>提示：第 1 小節和第 2 小節必須長得一模一樣喔！</em><br>
@@ -248,8 +295,8 @@
             </div>
         </div>
 
-        <div style="margin-top: 20px; text-align: right; color: #7f8c8d; font-size: 1.1rem; border-top: 2px dashed #bdc3c7; padding-top: 15px;">
-            老師評語 / 印章處：_________________________
+        <div class="total-score-section">
+            總分：<span class="score-line"></span> / 100%
         </div>
     </div>
 
