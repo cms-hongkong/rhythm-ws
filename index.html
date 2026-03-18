@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>頻現句專題活動</title>
+    <title>頻現句互動學習單</title>
     <style>
-        /* 螢幕顯示的基本樣式 */
+        /* 螢幕顯示基本樣式 */
         body {
             font-family: "Microsoft JhengHei", Arial, sans-serif;
             background-color: #f4f6f7;
@@ -17,285 +17,242 @@
             align-items: center;
         }
 
-        /* 學習單主體 (A4 比例的容器) */
         .worksheet-container {
             background-color: white;
             width: 100%;
-            max-width: 800px;
-            padding: 40px;
+            max-width: 750px;
+            padding: 30px;
             box-shadow: 0px 10px 30px rgba(0,0,0,0.1);
             border-radius: 10px;
             box-sizing: border-box;
         }
 
-        h1 {
-            text-align: center;
-            color: #2980b9;
-            font-size: 2.5rem;
-            margin-bottom: 5px;
-        }
+        h1 { text-align: center; color: #2980b9; font-size: 2rem; margin: 0 0 5px 0; }
+        .subtitle { text-align: center; font-size: 1.1rem; color: #7f8c8d; margin-bottom: 20px; }
 
-        .subtitle {
-            text-align: center;
-            font-size: 1.2rem;
-            color: #7f8c8d;
-            margin-bottom: 30px;
-        }
-
-        /* 學生資料輸入區 */
+        /* 學生資料區 */
         .student-info {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 40px;
-            padding-bottom: 20px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
             border-bottom: 3px solid #34495e;
             flex-wrap: wrap;
-            gap: 15px;
+            gap: 10px;
         }
 
-        .info-group {
-            display: flex;
-            align-items: center;
-            font-size: 1.2rem;
-            font-weight: bold;
-        }
-
+        .info-group { display: flex; align-items: center; font-size: 1.1rem; font-weight: bold; }
         .info-group input {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-family: inherit;
             border: none;
             border-bottom: 2px dashed #7f8c8d;
-            margin-left: 10px;
-            padding: 5px;
-            width: 120px;
+            margin-left: 8px;
+            padding: 3px;
+            width: 100px;
             background-color: #fdfbf7;
             text-align: center;
             outline: none;
             color: #2c3e50;
         }
 
-        .info-group input:focus {
-            border-bottom-color: #e67e22;
-            background-color: #fff;
-        }
-
-        /* 任務區塊設計 */
+        /* 任務區塊 */
         .task-section {
-            margin-bottom: 40px;
-            padding: 20px;
+            margin-bottom: 25px;
+            padding: 15px;
             background-color: #fdfbf7;
             border: 2px solid #bdc3c7;
-            border-radius: 15px;
+            border-radius: 12px;
         }
 
         .task-title {
-            font-size: 1.5rem;
-            color: #d35400;
-            margin-top: 0;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            font-size: 1.3rem; color: #d35400; margin: 0 0 10px 0;
+            display: flex; align-items: center; gap: 8px;
         }
+        .task-desc { font-size: 1rem; margin: 0 0 15px 0; line-height: 1.4; }
+        .hint-text { color: #27ae60; font-weight: bold; font-size: 0.95rem; }
 
-        .task-desc {
-            font-size: 1.1rem;
-            margin-bottom: 20px;
-        }
-
-        /* 題目視覺排版 */
+        /* 任務一：找不同排版 */
         .rhythm-row {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-            gap: 15px;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 10px; gap: 10px;
         }
 
         .note-box {
-            background-color: white;
-            border: 2px solid #95a5a6;
-            padding: 10px 20px;
-            font-size: 2rem;
-            border-radius: 8px;
-            letter-spacing: 5px;
+            background-color: white; border: 2px solid #95a5a6;
+            padding: 8px 12px; font-size: 1.4rem; border-radius: 8px;
+            letter-spacing: 3px; cursor: pointer; transition: all 0.2s;
+            user-select: none;
+        }
+        .note-box:hover { background-color: #ecf0f1; }
+        
+        /* 任務一選取狀態 (紅框圈起) */
+        .selected-box {
+            border: 3px solid #e74c3c !important;
+            background-color: #fadbd8 !important;
+            box-shadow: 0 0 10px rgba(231, 76, 60, 0.5);
         }
 
-        .blank-box {
-            display: inline-block;
-            width: 50px;
-            height: 50px;
-            border: 2px dashed #e74c3c;
-            background-color: #fadbd8;
-            vertical-align: middle;
-            margin: 0 5px;
+        /* 任務二 & 三：可點擊填寫的空格 */
+        .interactive-slot {
+            display: inline-flex; justify-content: center; align-items: center;
+            width: 35px; height: 45px;
+            border: 2px dashed #3498db; background-color: #ebf5fb;
+            vertical-align: middle; margin: 0 4px; font-size: 1.8rem;
+            cursor: pointer; user-select: none; border-radius: 5px;
+            color: #2c3e50; font-weight: bold;
         }
+        .interactive-slot:hover { background-color: #d6eaf8; }
 
-        /* 創作工坊的五線譜網格 */
-        .composition-grid {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            margin-top: 20px;
-        }
-
+        /* 任務三：五線譜網格 */
+        .composition-grid { display: flex; gap: 15px; justify-content: center; margin-top: 15px; }
         .measure {
-            display: flex;
-            gap: 5px;
-            padding: 15px;
-            border: 2px solid #34495e;
-            border-radius: 10px;
-            background-color: white;
-            position: relative;
+            display: flex; gap: 5px; padding: 10px;
+            border: 2px solid #34495e; border-radius: 8px;
+            background-color: white; position: relative;
         }
-
         .measure::before {
-            content: "小節";
-            position: absolute;
-            top: -25px;
-            left: 5px;
-            font-size: 1rem;
-            color: #7f8c8d;
+            content: "小節"; position: absolute; top: -20px; left: 5px;
+            font-size: 0.9rem; color: #7f8c8d;
         }
 
-        .comp-slot {
-            width: 50px;
-            height: 70px;
-            border: 1px solid #bdc3c7;
-            background-color: #ecf0f1;
-            border-radius: 5px;
-        }
+        /* 任務三的空格稍大一點 */
+        .comp-slot { width: 40px; height: 55px; }
 
-        /* 列印按鈕 (懸浮在右下角) */
+        /* 列印按鈕 */
         .print-btn {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background-color: #2ecc71;
-            color: white;
-            font-size: 1.5rem;
-            font-weight: bold;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0px 6px 0px #27ae60;
-            transition: transform 0.1s, box-shadow 0.1s;
+            position: fixed; bottom: 30px; right: 30px;
+            background-color: #2ecc71; color: white;
+            font-size: 1.2rem; font-weight: bold; border: none;
+            padding: 12px 25px; border-radius: 50px;
+            cursor: pointer; box-shadow: 0px 5px 0px #27ae60;
             z-index: 1000;
         }
+        .print-btn:active { transform: translateY(5px); box-shadow: 0px 0px 0px #27ae60; }
 
-        .print-btn:active {
-            transform: translateY(6px);
-            box-shadow: 0px 0px 0px #27ae60;
-        }
-
-        /* =========================================
-           列印專用樣式 (@media print)
-           當按下 Ctrl+P 或列印按鈕時，這些規則才會生效
-           ========================================= */
+        /* ================= 列印專用樣式 ================= */
         @media print {
-            body {
-                background-color: white; /* 拿掉灰色背景省墨水 */
-                padding: 0;
+            body { background-color: white; padding: 0; }
+            .worksheet-container { box-shadow: none; border: none; padding: 0; max-width: 100%; }
+            .print-btn, .hint-text { display: none !important; } /* 列印時隱藏按鈕和操作提示 */
+            
+            .info-group input { background-color: transparent; border-bottom: 1px solid black; color: black; }
+            
+            /* 列印時確保空格看起來像正常的紙本填空 */
+            .interactive-slot {
+                border: 2px solid #7f8c8d !important; /* 變成實線框 */
+                background-color: transparent !important;
             }
 
-            .worksheet-container {
-                box-shadow: none; /* 拿掉陰影 */
-                padding: 0;
-                max-width: 100%;
-            }
-
-            .print-btn {
-                display: none; /* 列印時隱藏列印按鈕！ */
-            }
-
-            .info-group input {
-                background-color: transparent; /* 去除輸入框底色 */
-                border-bottom: 1px solid black; /* 變成實線讓填寫更清楚 */
-                color: black;
-            }
-
-            /* 強制列印出背景顏色與框線 (確保框框印得出來) */
-            * {
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
-            }
-
-            /* 設定列印邊界為 A4 尺寸 */
-            @page {
-                size: A4 portrait;
-                margin: 1.5cm;
-            }
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            @page { size: A4 portrait; margin: 1cm; }
+            .task-section { page-break-inside: avoid; }
         }
     </style>
 </head>
 <body>
 
-    <button class="print-btn" onclick="window.print()">🖨️ 輸出 PDF / 列印</button>
+    <button class="print-btn" onclick="window.print()">🖨️ 完成！輸出 PDF</button>
 
     <div class="worksheet-container">
         <h1>🎵 音樂節奏專題活動</h1>
         <div class="subtitle">—— 尋找與創作「頻現句 (Ostinato)」大挑戰 ——</div>
 
         <div class="student-info">
-            <div class="info-group">
-                班別：<input type="text" id="class-name" placeholder="例: 2A">
-            </div>
-            <div class="info-group">
-                學號：<input type="text" id="student-id" placeholder="例: 15">
-            </div>
-            <div class="info-group">
-                姓名：<input type="text" id="student-name" placeholder="輸入你的名字">
-            </div>
+            <div class="info-group">班別：<input type="text" placeholder="例: 2A"></div>
+            <div class="info-group">學號：<input type="text" placeholder="例: 15"></div>
+            <div class="info-group">姓名：<input type="text" placeholder="請輸入姓名"></div>
         </div>
 
         <div class="task-section">
             <h2 class="task-title">🔍 任務一：X光掃描機（找不同）</h2>
-            <p class="task-desc">下面的節奏箱子中，有一個「搗蛋鬼」破壞了頻現句的重複規律。請用筆將那個不一樣的箱子<strong>圈起來</strong>。</p>
-            
-            <div class="rhythm-row">
-                <div class="note-box">♩ ♫ ♩ 𝄽</div>
-                <div class="note-box">♩ ♫ ♩ 𝄽</div>
-                <div class="note-box">♩ ♩ ♩ 𝄽</div> <div class="note-box">♩ ♫ ♩ 𝄽</div>
+            <p class="task-desc">
+                下面的節奏箱子中，有一個「搗蛋鬼」破壞了頻現句的重複規律。<br>
+                <span class="hint-text">👉 請「點擊」那個不一樣的箱子把它圈起來。</span>
+            </p>
+            <div class="rhythm-row" id="task1-container">
+                <div class="note-box" onclick="selectBox(this)">♩ ♫ ♩ 𝄽</div>
+                <div class="note-box" onclick="selectBox(this)">♩ ♫ ♩ 𝄽</div>
+                <div class="note-box" onclick="selectBox(this)">♩ ♩ ♩ 𝄽</div>
+                <div class="note-box" onclick="selectBox(this)">♩ ♫ ♩ 𝄽</div>
             </div>
         </div>
 
         <div class="task-section">
             <h2 class="task-title">🌉 任務二：修復音符橋樑（填空）</h2>
-            <p class="task-desc">這座橋有著重複的音符圖案（頻現句），但中間破了幾個洞。請觀察前後的規律，在虛線框框內畫上<strong>正確的音符（♩、♫、𝄽）</strong>來修補它。</p>
-            
+            <p class="task-desc">
+                這座橋有著重複的音符圖案，但中間破了幾個洞。請觀察前後的規律修補它。<br>
+                <span class="hint-text">👉 請「點擊」藍色虛線空格，可以切換不同的音符。</span>
+            </p>
             <div class="rhythm-row">
-                <div class="note-box">♫ ♫ ♩ ♩</div>
-                <span>——</span>
-                <div class="note-box">♫ <span class="blank-box"></span> ♩ ♩</div>
-                <span>——</span>
-                <div class="note-box">♫ ♫ <span class="blank-box"></span> ♩</div>
+                <div class="note-box" style="cursor: default;">♫ ♫ ♩ ♩</div>
+                <span>—</span>
+                <div class="note-box" style="cursor: default;">♫ <div class="interactive-slot" onclick="cycleNote(this)"></div> ♩ ♩</div>
+                <span>—</span>
+                <div class="note-box" style="cursor: default;">♫ ♫ <div class="interactive-slot" onclick="cycleNote(this)"></div> ♩</div>
             </div>
         </div>
 
         <div class="task-section">
             <h2 class="task-title">✨ 任務三：頻現句創作工房</h2>
-            <p class="task-desc">你是一位小小作曲家！請在下方的空格中，自由寫入音符（♩、♫、𝄽），創作出一段<strong>屬於你自己的頻現句</strong>。<br><em>提示：第 1 小節和第 2 小節必須長得一模一樣喔！</em></p>
-            
+            <p class="task-desc">
+                你是一位小小作曲家！請在下方的空格中，創作出一段屬於你的頻現句。<br>
+                <em>提示：第 1 小節和第 2 小節必須長得一模一樣喔！</em><br>
+                <span class="hint-text">👉 請「點擊」藍色虛線空格來輸入音符。</span>
+            </p>
             <div class="composition-grid">
                 <div class="measure">
-                    <div class="comp-slot"></div>
-                    <div class="comp-slot"></div>
-                    <div class="comp-slot"></div>
-                    <div class="comp-slot"></div>
+                    <div class="interactive-slot comp-slot" onclick="cycleNote(this)"></div>
+                    <div class="interactive-slot comp-slot" onclick="cycleNote(this)"></div>
+                    <div class="interactive-slot comp-slot" onclick="cycleNote(this)"></div>
+                    <div class="interactive-slot comp-slot" onclick="cycleNote(this)"></div>
                 </div>
-                <div style="width: 4px; background-color: #2c3e50; margin: 0 10px;"></div> <div class="measure">
-                    <div class="comp-slot"></div>
-                    <div class="comp-slot"></div>
-                    <div class="comp-slot"></div>
-                    <div class="comp-slot"></div>
+                <div style="width: 3px; background-color: #2c3e50; margin: 0 5px;"></div>
+                <div class="measure">
+                    <div class="interactive-slot comp-slot" onclick="cycleNote(this)"></div>
+                    <div class="interactive-slot comp-slot" onclick="cycleNote(this)"></div>
+                    <div class="interactive-slot comp-slot" onclick="cycleNote(this)"></div>
+                    <div class="interactive-slot comp-slot" onclick="cycleNote(this)"></div>
                 </div>
             </div>
         </div>
 
-        <div style="margin-top: 40px; text-align: right; color: #7f8c8d; font-size: 1.2rem; border-top: 2px dashed #bdc3c7; padding-top: 20px;">
+        <div style="margin-top: 20px; text-align: right; color: #7f8c8d; font-size: 1.1rem; border-top: 2px dashed #bdc3c7; padding-top: 15px;">
             老師評語 / 印章處：_________________________
         </div>
-
     </div>
 
+    <script>
+        // --- 任務一：單選邏輯 ---
+        function selectBox(clickedElement) {
+            // 先清除所有箱子的選取狀態
+            const allBoxes = document.querySelectorAll('#task1-container .note-box');
+            allBoxes.forEach(box => box.classList.remove('selected-box'));
+            
+            // 為點擊的箱子加上紅色選取框
+            clickedElement.classList.add('selected-box');
+        }
+
+        // --- 任務二 & 三：點擊切換音符邏輯 ---
+        // 定義切換的順序：空白 -> 四分音符 -> 八分音符 -> 休止符 -> 循環回空白
+        const notesArray = ["", "♩", "♫", "𝄽"];
+
+        function cycleNote(slotElement) {
+            // 取得目前的內容
+            let currentText = slotElement.innerText;
+            
+            // 找出目前內容在陣列中的位置
+            let currentIndex = notesArray.indexOf(currentText);
+            
+            // 如果找不到（防呆），預設為 -1
+            if (currentIndex === -1) currentIndex = 0;
+
+            // 計算下一個位置，如果超過陣列長度就回到 0 (餘數運算)
+            let nextIndex = (currentIndex + 1) % notesArray.length;
+
+            // 更新畫面
+            slotElement.innerText = notesArray[nextIndex];
+        }
+    </script>
 </body>
 </html>
