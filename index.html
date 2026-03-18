@@ -65,7 +65,7 @@
             margin-bottom: 5px;
         }
 
-        /* 學生資料區 */
+        /* 學生資料區：新增日期欄位並優化 */
         .student-info {
             display: flex;
             justify-content: space-between;
@@ -128,6 +128,7 @@
             padding: 8px 12px; font-size: 1.4rem; border-radius: 8px;
             letter-spacing: 3px; cursor: pointer; transition: all 0.2s;
             user-select: none;
+            display: flex; align-items: center; justify-content: center; /* 為了相容SVG */
         }
         .note-box:hover { background-color: #ecf0f1; }
         
@@ -181,6 +182,21 @@
             margin: 0 10px;
         }
 
+        /* 兼容Apple設備的休止符圖片樣式 */
+        .apple-rest-image {
+            width: 20px;  /* 根據字體大小調整圖片寬度 */
+            height: auto;
+            display: inline-block;
+            vertical-align: middle;
+            margin-top: -3px; /* 微調對齊 */
+        }
+        
+        /* 在不同任務框內調整SVG圖片大小 */
+        .slot .apple-rest-image { width: 1.2rem; }
+        .slot.filled .apple-rest-image { width: 1.4rem; }
+        .comp-slot .apple-rest-image { width: 1.6rem; }
+        .comp-slot.active-slot .apple-rest-image { width: 1.8rem; }
+
         /* 列印按鈕 */
         .print-btn {
             position: fixed; bottom: 30px; right: 30px;
@@ -224,7 +240,7 @@
             <div class="header-line-3">二年級&nbsp; 音樂專題 - 節奏頻現句</div>
         </div>
 
-        <div class="deadline-text">繳交日期：2026年5月29日(五)</div>
+        <div class="deadline-text">繳交日期：2025年5月29日(五)</div>
 
         <div class="student-info">
             <div class="info-group">班別：<input type="text" placeholder="例: 2A"></div>
@@ -243,10 +259,10 @@
                 <span class="hint-text">👉 請「點擊」那個不一樣的箱子把它圈起來。</span>
             </p>
             <div class="rhythm-row" id="task1-container">
-                <div class="note-box" onclick="selectBox(this)">♩ ♫ ♩ 𝄽</div>
-                <div class="note-box" onclick="selectBox(this)">♩ ♫ ♩ 𝄽</div>
-                <div class="note-box" onclick="selectBox(this)">♩ ♩ ♩ 𝄽</div>
-                <div class="note-box" onclick="selectBox(this)">♩ ♫ ♩ 𝄽</div>
+                <div class="note-box" onclick="selectBox(this)">♩ ♫ ♩ <img class="apple-rest-image" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSI+PHBhdGggZmlsbD0iIzJjM2U1MCIgZD0iTTI3LjkgMjMuOWwtMTIuNi 7LjRjLTEuOSAxLjEtMy4zIDMuNy0zLjIgNy4yYzAgNi44IDUuOCAxMi4zIDEyLjkgMTIuM3MxMi45LTUuNSAxMi45LTEyLjNjMC04LjMtOS44LTE2LjMtMjEuMi0yMy40YzAuNi0wLjMgMS4zLTAuNCAyLTAuNGMxLjcgMCAzLjEgMS40IDMuMSAzLjFzLTEuNCAzLjEtMy4xIDMuMXMtMy4xLTEuNC0zLjEtMy4xYzAtMC44IDAuMy0xLjUgMC44LTJMNC44IDIwLjJsMTUuMiAzLjZMMTcuNSAyOGgxMC40bDAtNC4xeiIvPjwvc3ZnPg==" alt="𝄽"></div>
+                <div class="note-box" onclick="selectBox(this)">♩ ♫ ♩ <img class="apple-rest-image" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSI+PHBhdGggZmlsbD0iIzJjM2U1MCIgZD0iTTI3LjkgMjMuOWwtMTIuNiA3LjRjLTEuOSAxLjEtMy4zIDMuNy0zLjIgNy4yYzAgNi44IDUuOCAxMi4zIDEyLjkgMTIuM3MxMi45LTUuNSAxMi45LTEyLjNjMC04LjMtOS44LTE2LjMtMjEuMi0yMy40YzAuNi0wLjMgMS4zLTAuNCAyLTAuNGMxLjcgMCAzLjEgMS40IDMuMSAzLjFzLTEuNCAzLjEtMy4xIDMuMXMtMy4xLTEuNC0zLjEtMy4xYzAtMC44IDAuMy0xLjUgMC44LTJMNC44IDIwLjJsMTUuMiAzLjZMMTcuNSAyOGgxMC40bDAtNC4xeiIvPjwvc3ZnPg==" alt="𝄽"></div>
+                <div class="note-box" onclick="selectBox(this)">♩ ♩ ♩ <img class="apple-rest-image" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSI+PHBhdGggZmlsbD0iIzJjM2U1MCIgZD0iTTI3LjkgMjMuOWwtMTIuNiA3LjRjLTEuOSAxLjEtMy4zIDMuNy0zLjIgNy4yYzAgNi44IDUuOCAxMi4zIDEyLjkgMTIuM3MxMi45LTUuNSAxMi45LTEyLjNjMC04LjMtOS44LTE2LjMtMjEuMi0yMy40YzAuNi0wLjMgMS4zLTAuNCAyLTAuNGMxLjcgMCAzLjEgMS40IDMuMSAzLjFzLTEuNCAzLjEtMy4xIDMuMXMtMy4xLTEuNC0zLjEtMy4xYzAtMC44IDAuMy0xLjUgMC44LTJMNC44IDIwLjJsMTUuMiAzLjZMMTcuNSAyOGgxMC40bDAtNC4xeiIvPjwvc3ZnPg==" alt="𝄽"></div>
+                <div class="note-box" onclick="selectBox(this)">♩ ♫ ♩ <img class="apple-rest-image" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSI+PHBhdGggZmlsbD0iIzJjM2U1MCIgZD0iTTI3LjkgMjMuOWwtMTIuNiA3LjRjLTEuOSAxLjEtMy4zIDMuNy0zLjIgNy4yYzAgNi44IDUuOCAxMi4zIDEyLjkgMTIuM3MxMi45LTUuNSAxMi45LTEyLjNjMC04LjMtOS44LTE2LjMtMjEuMi0yMy40YzAuNi0wLjMgMS4zLTAuNCAyLTAuNGMxLjcgMCAzLjEgMS40IDMuMSAzLjFzLTEuNCAzLjEtMy4xIDMuMXMtMy4xLTEuNC0zLjEtMy4xYzAtMC44IDAuMy0xLjUgMC44LTJMNC44IDIwLjJsMTUuMiAzLjZMMTcuNSAyOGgxMC40bDAtNC4xeiIvPjwvc3ZnPg==" alt="𝄽"></div>
             </div>
         </div>
 
@@ -309,14 +325,28 @@
         }
 
         // --- 任務二 & 三：點擊切換音符邏輯 ---
-        const notesArray = ["", "♩", "♫", "𝄽"];
+        // 定義 Apple 設備兼容的休止符圖片 Base64 字串
+        const base64RestSvg = "PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSI+PHBhdGggZmlsbD0iIzJjM2U1MCIgZD0iTTI3LjkgMjMuOWwtMTIuNiA3LjRjLTEuOSAxLjEtMy4zIDMuNy0zLjIgNy4yYzAgNi44IDUuOCAxMi4zIDEyLjkgMTIuM3MxMi45LTUuNSAxMi45LTEyLjNjMC04LjMtOS44LTE2LjMtMjEuMi0yMy40YzAuNi0wLjMgMS4zLTAuNCAyLTAuNGMxLjcgMCAzLjEgMS40IDMuMSAzLjFzLTEuNCAzLjEtMy4xIDMuMXMtMy4xLTEuNC0zLjEtMy4xYzAtMC44IDAuMy0xLjUgMC44LTJMNC44IDIwLjJsMTUuMiAzLjZMMTcuNSAyOGgxMC40bDAtNC4xeiIvPjwvc3ZnPg==";
+        const restImageHtml = `<img class="apple-rest-image" src="data:image/svg+xml;base64,${base64RestSvg}" alt="𝄽">`;
+
+        // 定義切換的順序：空白 -> 四分音符 -> 八分音符 -> 休止符 (圖片)
+        const notesArray = ["", "♩", "♫", restImageHtml];
 
         function cycleNote(slotElement) {
-            let currentText = slotElement.innerText;
-            let currentIndex = notesArray.indexOf(currentText);
+            // 取得目前的內容
+            let currentContent = slotElement.innerHTML;
+            
+            // 找出目前內容在陣列中的位置
+            let currentIndex = notesArray.indexOf(currentContent);
+            
+            // 如果 currentIndex 為 -1，說明當前內容可能是空白符號或格式問題，重置為 0
             if (currentIndex === -1) currentIndex = 0;
+
+            // 計算下一個位置，如果超過陣列長度就回到 0
             let nextIndex = (currentIndex + 1) % notesArray.length;
-            slotElement.innerText = notesArray[nextIndex];
+
+            // 更新畫面
+            slotElement.innerHTML = notesArray[nextIndex];
         }
     </script>
 </body>
