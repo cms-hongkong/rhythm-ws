@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>頻現句互動學習單</title>
+    <title>聖公會偉倫小學 - 音樂專題</title>
     <style>
         /* 螢幕顯示基本樣式 */
         body {
-            font-family: "Microsoft JhengHei", Arial, sans-serif;
+            font-family: "Microsoft JhengHei", "PingFang TC", Arial, sans-serif;
             background-color: #f4f6f7;
             color: #2c3e50;
             margin: 0;
@@ -27,8 +27,32 @@
             box-sizing: border-box;
         }
 
-        h1 { text-align: center; color: #2980b9; font-size: 2rem; margin: 0 0 5px 0; }
-        .subtitle { text-align: center; font-size: 1.1rem; color: #7f8c8d; margin-bottom: 20px; }
+        /* --- 全新正式標題排版 --- */
+        .school-title { 
+            text-align: center; 
+            color: #2c3e50; 
+            font-size: 2.2rem; 
+            margin: 0 0 8px 0; 
+            letter-spacing: 2px;
+        }
+        
+        .academic-year { 
+            text-align: center; 
+            font-size: 1.2rem; 
+            color: #34495e; 
+            margin-bottom: 15px; 
+            letter-spacing: 1px;
+        }
+        
+        .main-topic { 
+            text-align: center; 
+            font-size: 1.6rem; 
+            color: #2980b9; 
+            font-weight: bold; 
+            margin-bottom: 25px; 
+            padding-bottom: 20px;
+            border-bottom: 2px solid #bdc3c7; /* 標題底下的分隔線 */
+        }
 
         /* 學生資料區 */
         .student-info {
@@ -134,13 +158,12 @@
         @media print {
             body { background-color: white; padding: 0; }
             .worksheet-container { box-shadow: none; border: none; padding: 0; max-width: 100%; }
-            .print-btn, .hint-text { display: none !important; } /* 列印時隱藏按鈕和操作提示 */
+            .print-btn, .hint-text { display: none !important; }
             
             .info-group input { background-color: transparent; border-bottom: 1px solid black; color: black; }
             
-            /* 列印時確保空格看起來像正常的紙本填空 */
             .interactive-slot {
-                border: 2px solid #7f8c8d !important; /* 變成實線框 */
+                border: 2px solid #7f8c8d !important;
                 background-color: transparent !important;
             }
 
@@ -155,13 +178,21 @@
     <button class="print-btn" onclick="window.print()">🖨️ 完成！輸出 PDF</button>
 
     <div class="worksheet-container">
-        <h1>🎵 音樂節奏專題活動</h1>
-        <div class="subtitle">—— 尋找與創作「頻現句 (Ostinato)」大挑戰 ——</div>
+        
+        <h1 class="school-title">聖公會偉倫小學</h1>
+        <div class="academic-year">2025-2026年度 音樂科</div>
+        <div class="main-topic">二年級 音樂專題 - 節奏頻現句</div>
 
         <div class="student-info">
-            <div class="info-group">班別：<input type="text" placeholder="例: 2A"></div>
-            <div class="info-group">學號：<input type="text" placeholder="例: 15"></div>
-            <div class="info-group">姓名：<input type="text" placeholder="請輸入姓名"></div>
+            <div class="info-group">
+                班別：<input type="text" placeholder="例: 2A">
+            </div>
+            <div class="info-group">
+                學號：<input type="text" placeholder="例: 15">
+            </div>
+            <div class="info-group">
+                姓名：<input type="text" placeholder="請輸入姓名">
+            </div>
         </div>
 
         <div class="task-section">
@@ -225,32 +256,19 @@
     <script>
         // --- 任務一：單選邏輯 ---
         function selectBox(clickedElement) {
-            // 先清除所有箱子的選取狀態
             const allBoxes = document.querySelectorAll('#task1-container .note-box');
             allBoxes.forEach(box => box.classList.remove('selected-box'));
-            
-            // 為點擊的箱子加上紅色選取框
             clickedElement.classList.add('selected-box');
         }
 
         // --- 任務二 & 三：點擊切換音符邏輯 ---
-        // 定義切換的順序：空白 -> 四分音符 -> 八分音符 -> 休止符 -> 循環回空白
         const notesArray = ["", "♩", "♫", "𝄽"];
 
         function cycleNote(slotElement) {
-            // 取得目前的內容
             let currentText = slotElement.innerText;
-            
-            // 找出目前內容在陣列中的位置
             let currentIndex = notesArray.indexOf(currentText);
-            
-            // 如果找不到（防呆），預設為 -1
             if (currentIndex === -1) currentIndex = 0;
-
-            // 計算下一個位置，如果超過陣列長度就回到 0 (餘數運算)
             let nextIndex = (currentIndex + 1) % notesArray.length;
-
-            // 更新畫面
             slotElement.innerText = notesArray[nextIndex];
         }
     </script>
