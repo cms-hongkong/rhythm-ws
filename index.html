@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>頻現句專題活動</title>
+    <style>
+        /* 螢幕顯示的基本樣式 */
+        body {
+            font-family: "Microsoft JhengHei", Arial, sans-serif;
+            background-color: #f4f6f7;
+            color: #2c3e50;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* 學習單主體 (A4 比例的容器) */
+        .worksheet-container {
+            background-color: white;
+            width: 100%;
+            max-width: 800px;
+            padding: 40px;
+            box-shadow: 0px 10px 30px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2980b9;
+            font-size: 2.5rem;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+        }
+
+        /* 學生資料輸入區 */
+        .student-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #34495e;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .info-group {
+            display: flex;
+            align-items: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .info-group input {
+            font-size: 1.2rem;
+            font-family: inherit;
+            border: none;
+            border-bottom: 2px dashed #7f8c8d;
+            margin-left: 10px;
+            padding: 5px;
+            width: 120px;
+            background-color: #fdfbf7;
+            text-align: center;
+            outline: none;
+            color: #2c3e50;
+        }
+
+        .info-group input:focus {
+            border-bottom-color: #e67e22;
+            background-color: #fff;
+        }
+
+        /* 任務區塊設計 */
+        .task-section {
+            margin-bottom: 40px;
+            padding: 20px;
+            background-color: #fdfbf7;
+            border: 2px solid #bdc3c7;
+            border-radius: 15px;
+        }
+
+        .task-title {
+            font-size: 1.5rem;
+            color: #d35400;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .task-desc {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        /* 題目視覺排版 */
+        .rhythm-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            gap: 15px;
+        }
+
+        .note-box {
+            background-color: white;
+            border: 2px solid #95a5a6;
+            padding: 10px 20px;
+            font-size: 2rem;
+            border-radius: 8px;
+            letter-spacing: 5px;
+        }
+
+        .blank-box {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border: 2px dashed #e74c3c;
+            background-color: #fadbd8;
+            vertical-align: middle;
+            margin: 0 5px;
+        }
+
+        /* 創作工坊的五線譜網格 */
+        .composition-grid {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .measure {
+            display: flex;
+            gap: 5px;
+            padding: 15px;
+            border: 2px solid #34495e;
+            border-radius: 10px;
+            background-color: white;
+            position: relative;
+        }
+
+        .measure::before {
+            content: "小節";
+            position: absolute;
+            top: -25px;
+            left: 5px;
+            font-size: 1rem;
+            color: #7f8c8d;
+        }
+
+        .comp-slot {
+            width: 50px;
+            height: 70px;
+            border: 1px solid #bdc3c7;
+            background-color: #ecf0f1;
+            border-radius: 5px;
+        }
+
+        /* 列印按鈕 (懸浮在右下角) */
+        .print-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #2ecc71;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0px 6px 0px #27ae60;
+            transition: transform 0.1s, box-shadow 0.1s;
+            z-index: 1000;
+        }
+
+        .print-btn:active {
+            transform: translateY(6px);
+            box-shadow: 0px 0px 0px #27ae60;
+        }
+
+        /* =========================================
+           列印專用樣式 (@media print)
+           當按下 Ctrl+P 或列印按鈕時，這些規則才會生效
+           ========================================= */
+        @media print {
+            body {
+                background-color: white; /* 拿掉灰色背景省墨水 */
+                padding: 0;
+            }
+
+            .worksheet-container {
+                box-shadow: none; /* 拿掉陰影 */
+                padding: 0;
+                max-width: 100%;
+            }
+
+            .print-btn {
+                display: none; /* 列印時隱藏列印按鈕！ */
+            }
+
+            .info-group input {
+                background-color: transparent; /* 去除輸入框底色 */
+                border-bottom: 1px solid black; /* 變成實線讓填寫更清楚 */
+                color: black;
+            }
+
+            /* 強制列印出背景顏色與框線 (確保框框印得出來) */
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            /* 設定列印邊界為 A4 尺寸 */
+            @page {
+                size: A4 portrait;
+                margin: 1.5cm;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <button class="print-btn" onclick="window.print()">🖨️ 輸出 PDF / 列印</button>
+
+    <div class="worksheet-container">
+        <h1>🎵 音樂節奏專題活動</h1>
+        <div class="subtitle">—— 尋找與創作「頻現句 (Ostinato)」大挑戰 ——</div>
+
+        <div class="student-info">
+            <div class="info-group">
+                班別：<input type="text" id="class-name" placeholder="例: 2A">
+            </div>
+            <div class="info-group">
+                學號：<input type="text" id="student-id" placeholder="例: 15">
+            </div>
+            <div class="info-group">
+                姓名：<input type="text" id="student-name" placeholder="輸入你的名字">
+            </div>
+        </div>
+
+        <div class="task-section">
+            <h2 class="task-title">🔍 任務一：X光掃描機（找不同）</h2>
+            <p class="task-desc">下面的節奏箱子中，有一個「搗蛋鬼」破壞了頻現句的重複規律。請用筆將那個不一樣的箱子<strong>圈起來</strong>。</p>
+            
+            <div class="rhythm-row">
+                <div class="note-box">♩ ♫ ♩ 𝄽</div>
+                <div class="note-box">♩ ♫ ♩ 𝄽</div>
+                <div class="note-box">♩ ♩ ♩ 𝄽</div> <div class="note-box">♩ ♫ ♩ 𝄽</div>
+            </div>
+        </div>
+
+        <div class="task-section">
+            <h2 class="task-title">🌉 任務二：修復音符橋樑（填空）</h2>
+            <p class="task-desc">這座橋有著重複的音符圖案（頻現句），但中間破了幾個洞。請觀察前後的規律，在虛線框框內畫上<strong>正確的音符（♩、♫、𝄽）</strong>來修補它。</p>
+            
+            <div class="rhythm-row">
+                <div class="note-box">♫ ♫ ♩ ♩</div>
+                <span>——</span>
+                <div class="note-box">♫ <span class="blank-box"></span> ♩ ♩</div>
+                <span>——</span>
+                <div class="note-box">♫ ♫ <span class="blank-box"></span> ♩</div>
+            </div>
+        </div>
+
+        <div class="task-section">
+            <h2 class="task-title">✨ 任務三：頻現句創作工房</h2>
+            <p class="task-desc">你是一位小小作曲家！請在下方的空格中，自由寫入音符（♩、♫、𝄽），創作出一段<strong>屬於你自己的頻現句</strong>。<br><em>提示：第 1 小節和第 2 小節必須長得一模一樣喔！</em></p>
+            
+            <div class="composition-grid">
+                <div class="measure">
+                    <div class="comp-slot"></div>
+                    <div class="comp-slot"></div>
+                    <div class="comp-slot"></div>
+                    <div class="comp-slot"></div>
+                </div>
+                <div style="width: 4px; background-color: #2c3e50; margin: 0 10px;"></div> <div class="measure">
+                    <div class="comp-slot"></div>
+                    <div class="comp-slot"></div>
+                    <div class="comp-slot"></div>
+                    <div class="comp-slot"></div>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top: 40px; text-align: right; color: #7f8c8d; font-size: 1.2rem; border-top: 2px dashed #bdc3c7; padding-top: 20px;">
+            老師評語 / 印章處：_________________________
+        </div>
+
+    </div>
+
+</body>
+</html>
